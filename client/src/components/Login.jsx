@@ -1,43 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:5001/api/auth/login", { email, password });
+      localStorage.setItem("token", response.data.token);
+      navigate("/upload"); // Redirect to the dashboard after login
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+
   return (
-    <div className=" text-gray-400 bg-gray-900 body-font mx-auto  px-4 py-16 sm:px-6 lg:px-8">
+    <div className="text-gray-400 bg-gray-900 body-font mx-auto px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-lg">
         <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
           Get started today
         </h1>
-
         <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati
-          sunt dolores deleniti inventore quaerat mollitia?
+          Welcome back! Please login to your account.
         </p>
-
         <form
-          action="#"
+          onSubmit={handleLogin}
           className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
         >
-          <p className="text-center text-lg font-medium">
-            Sign in to your account
-          </p>
-
+          <p className="text-center text-lg font-medium">Sign in to your account</p>
           <div>
-            <label htmlFor="email" className="sr-only">
-              Email
-            </label>
-
+            <label htmlFor="email" className="sr-only">Email</label>
             <div className="relative">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter email"
               />
-
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="size-4 text-gray-400"
+                  className="h-4 w-4 text-gray-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -52,23 +60,20 @@ const Login = () => {
               </span>
             </div>
           </div>
-
           <div>
-            <label htmlFor="password" className="sr-only">
-              Password
-            </label>
-
+            <label htmlFor="password" className="sr-only">Password</label>
             <div className="relative">
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
               />
-
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="size-4 text-gray-400"
+                  className="h-4 w-4 text-gray-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -89,19 +94,14 @@ const Login = () => {
               </span>
             </div>
           </div>
-
           <button
             type="submit"
             className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
           >
             Sign in
           </button>
-
           <p className="text-center text-sm text-gray-500">
-            No account?
-            <Link to={'/signup'} className="underline" href="#">
-              Sign up
-            </Link>
+            No account? <Link to="/signup" className="underline">Sign up</Link>
           </p>
         </form>
       </div>
