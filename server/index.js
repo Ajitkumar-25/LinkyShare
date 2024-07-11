@@ -24,7 +24,7 @@ app.post("/api/upload", upload.array("files"), async (req, res) => {
       req.files.map(async (file) => {
         return new Promise((resolve, reject) => {
           const upload_stream = cloudinary.uploader.upload_stream(
-            { resource_type: "auto" },
+            { resource_type: "auto", flags: "attachment" },
             (error, result) => {
               if (error) reject(error);
               resolve(result);
@@ -37,7 +37,6 @@ app.post("/api/upload", upload.array("files"), async (req, res) => {
     );
 
     const downloadLinks = uploadedFiles.map((file) => file.secure_url);
-    // console.log(downloadLinks);
     res.json({ downloadLinks });
   } catch (error) {
     console.error("File upload error:", error);
@@ -69,7 +68,12 @@ app.post("/api/send-email", async (req, res) => {
       subject: "Download Links",
       html: `<p>Here are your download links:</p>
             <ul>
-              ${decryptedLinks.map((link) => `<li>${link}</li>`).join("")}
+              ${decryptedLinks
+                .map(
+                  (link) =>
+                    `<li><a href="${link}?fl_attachment" download>Download File</a></li>`
+                )
+                .join("")}
             </ul>`,
     };
 

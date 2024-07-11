@@ -48,7 +48,7 @@ const Upload = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4">
+    <div className="flex flex-col items-center justify-center min-h-96 bg-gray-900 p-4">
       <div
         {...getRootProps()}
         className={`flex flex-col items-center justify-center border-4 border-dotted rounded-md p-8 cursor-pointer transition-colors duration-300 h-1/2 w-1/2 mb-4 ${
@@ -90,7 +90,13 @@ const Upload = () => {
           <ul>
             {downloadLinks.map((link, index) => (
               <li key={index} className="text-gray-200 text-lg break-all">
-                {link}
+                <a
+                  href={`${link}?fl_attachment`}
+                  download
+                  className="text-blue-500 hover:underline"
+                >
+                  Download File {index + 1}
+                </a>
               </li>
             ))}
           </ul>
