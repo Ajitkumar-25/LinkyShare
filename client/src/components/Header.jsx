@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="text-gray-400 bg-gray-900 body-font">
+    <header className="text-gray-400 bg-gray-800 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <nav className="flex lg:w-2/5 flex-wrap items-center  text-xl md:ml-auto">
           <Link to={"/"} className="mr-5 hover:text-white">
@@ -15,15 +15,17 @@ const Header = () => {
           <Link className="mr-5 hover:text-white" href="/">
             Features
           </Link>
-          <Link className="hover:text-white" href="/">
+          <Link to={"/contact"} className="hover:text-white" href="/">
             Contact
           </Link>
         </nav>
         <Link
           className="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-white lg:items-center lg:justify-center mb-4 md:mb-0"
-          href="/"
+          to={'/'}
         >
-          <img src="logo.svg" alt="" />
+          <img src="logo.svg" alt=""
+          style={{width: "70px", height: "50px"}}
+           />
           <span className="ml-3 text-xl xl:block lg:hidden">LinkyShare</span>
         </Link>
         <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
