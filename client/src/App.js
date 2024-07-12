@@ -6,6 +6,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Upload from "./components/Upload";
 import Contact from "./components/Contact";
+import Features from "./components/Features";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/features" element={<Features />} />
         </Routes>
       </div>
       <Footer />
